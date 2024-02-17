@@ -10,6 +10,7 @@ export const NoteView = () => {
       justifyContent="space-between"
       sx={{ mb: 1 }}
       alignItems="center"
+      className="animate__animated animate__fadeIn animate__faster"
     >
       <Grid item>
         <Typography fontWeight="light" fontSize={39}>
@@ -17,7 +18,7 @@ export const NoteView = () => {
         </Typography>
       </Grid>
       <Grid item>
-        <Button color="primary" sx={{padding:2}}>
+        <Button color="primary" sx={{ padding: 2 }}>
           <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
           Guardar
         </Button>
@@ -29,7 +30,7 @@ export const NoteView = () => {
           fullWidth
           placeholder="Ingrese un titulo"
           label="Titulo"
-          sx={{border:'none',mb:1}}
+          sx={{ border: "none", mb: 1 }}
         />
         <TextField
           type="text"
@@ -40,7 +41,7 @@ export const NoteView = () => {
           minRows={5}
         />
       </Grid>
-      <ImageGallery/>
+      <ImageGallery />
     </Grid>
   );
 };
