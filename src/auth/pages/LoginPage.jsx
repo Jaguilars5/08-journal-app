@@ -16,13 +16,14 @@ import {
   startLoginWithEmailPassword,
 } from "../../store/auth";
 import { useMemo } from "react";
+const formData = {
+  email: "jegor.28.a@gmail.com",
+  password: "Emelec_28",
+};
 export const LoginPage = () => {
   const { status, errorMessage } = useSelector((sate) => sate.auth);
   const dispatch = useDispatch();
-  const { email, password, onInputChange } = useForm({
-    email: "jegor.28.a@gmail.com",
-    password: "Emelec_28",
-  });
+  const { email, password, onInputChange } = useForm(formData);
   const isAuthenticating = useMemo(() => status === "checking", [status]);
   const onSubmit = (event) => {
     event.preventDefault();

@@ -4,14 +4,15 @@ import {
   registerUserWithEmailPassword,
   singInWithGoogle,
 } from "../../firebase/providers";
+import { clearNotesLogout } from "../journal";
 import { checkingCredentials, login, logout } from "./authSlice";
 
-export const checkingAuthentication = (email, password) => {
+export const checkingAuthentication = () => {
   return async (dispatch) => {
     dispatch(checkingCredentials());
   };
 };
-export const starGoogleSingIn = (email, password) => {
+export const starGoogleSingIn = () => {
   return async (dispatch) => {
     dispatch(checkingCredentials());
     const result = await singInWithGoogle();
@@ -53,6 +54,7 @@ export const startLoginWithEmailPassword = ({ email, password }) => {
 export const startLogout = () => {
   return async (dispatch) => {
     await logoutFirebase();
+    dispatch(clearNotesLogout());
     dispatch(logout({}));
   };
 };
