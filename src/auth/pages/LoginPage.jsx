@@ -17,8 +17,8 @@ import {
 } from "../../store/auth";
 import { useMemo } from "react";
 const formData = {
-  email: "jegor.28.a@gmail.com",
-  password: "Emelec_28",
+  email: "",
+  password: "",
 };
 export const LoginPage = () => {
   const { status, errorMessage } = useSelector((sate) => sate.auth);

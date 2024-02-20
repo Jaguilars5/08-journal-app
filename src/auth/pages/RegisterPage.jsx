@@ -13,9 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "../../hooks";
 import { useMemo, useState } from "react";
 const formData = {
-  email: "jegor.28.a@gmail.com",
-  password: "Emelec_28",
-  displayName: "Jefferson Aguilar ",
+  email: "",
+  password: "",
+  displayName: "",
 };
 const formValidations = {
   email: [(value) => value.includes("@"), "El correo debe de tener una @"],
