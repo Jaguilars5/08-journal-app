@@ -1,22 +1,36 @@
 import { collection, deleteDoc, doc, setDoc } from "firebase/firestore/lite";
 import { FirebaseDB } from "../../firebase/confing";
+import { fileUpload } from "../../helpers";
+import { loadNotes } from "../../helpers/loadNotes";
 import {
   addNewEmptyNote,
-  setActiveNote,
+  deleteNoteById,
   savingNewNote,
+  setActiveNote,
   setNotes,
+  setPhotosToActiveNote,
   setSaving,
   updateNote,
-  setPhotosToActiveNote,
-  deleteNoteById,
 } from "./journalSlice";
-import { loadNotes } from "../../helpers/loadNotes";
-import { fileUpload } from "../../helpers";
 
 export const startNewNote = () => {
   return async (dispatch, getState) => {
     dispatch(savingNewNote());
     const { uid } = getState().auth;
+    const { active } = getState().journal;
+
+    // Validar que no haya una nota activa vacía
+    if (
+      active &&
+      (!active.title ||
+        !active.title.trim() ||
+        !active.body ||
+        !active.body.trim())
+    ) {
+      dispatch(setSaving());
+      return;
+    }
+
     const newNote = {
       title: "",
       body: "",
@@ -44,6 +58,16 @@ export const startSavedNote = () => {
     dispatch(setSaving());
     const { uid } = getState().auth;
     const { active: note } = getState().journal;
+
+    // Validar que la nota tenga título y contenido
+    if (!note.title || note.title.trim().length === 0) {
+      return;
+    }
+
+    if (!note.body || note.body.trim().length === 0) {
+      return;
+    }
+
     const noteToFireStore = { ...note };
     delete noteToFireStore.id;
     const docRef = doc(FirebaseDB, `${uid}/journal/notas/${note.id}`);
@@ -70,6 +94,6 @@ export const startDeletingNote = () => {
     const { active: note } = getState().journal;
     const docRef = doc(FirebaseDB, `${uid}/journal/notas/${note.id}`);
     await deleteDoc(docRef);
-    dispatch(deleteNoteById(note.id))
+    dispatch(deleteNoteById(note.id));
   };
 };

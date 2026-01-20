@@ -7,15 +7,15 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
-import { AuthLayout } from "../layout/AuthLayout";
-import { useForm } from "../../hooks";
+import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link as RouterLink } from "react-router-dom";
+import { useForm } from "../../hooks";
 import {
   starGoogleSingIn,
   startLoginWithEmailPassword,
 } from "../../store/auth";
-import { useMemo } from "react";
+import { AuthLayout } from "../layout/AuthLayout";
 const formData = {
   email: "",
   password: "",
@@ -42,9 +42,9 @@ export const LoginPage = () => {
         <Grid container>
           <Grid item xs={12} sx={{ mt: 2 }}>
             <TextField
-              label="correo"
+              label="Correo electrónico"
               type="email"
-              placeholder="example@google.com"
+              placeholder="correo@ejemplo.com"
               fullWidth
               name="email"
               value={email}
@@ -53,16 +53,21 @@ export const LoginPage = () => {
           </Grid>
           <Grid item xs={12} sx={{ mt: 2 }}>
             <TextField
-              label="Contrasena"
+              label="Contraseña"
               type="password"
-              placeholder="contrasena"
+              placeholder="Contraseña"
               fullWidth
               name="password"
               value={password}
               onChange={onInputChange}
             ></TextField>
           </Grid>
-          <Grid item xs={12} display={errorMessage ? "" : "none"}>
+          <Grid
+            item
+            xs={12}
+            display={errorMessage ? "" : "none"}
+            sx={{ mt: 2 }}
+          >
             <Alert severity="error">{errorMessage}</Alert>
           </Grid>
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
@@ -72,24 +77,42 @@ export const LoginPage = () => {
                 type="submit"
                 variant="contained"
                 fullWidth
+                sx={{
+                  py: 1.5,
+                  fontWeight: 600,
+                  boxShadow: 2,
+                  "&:hover": { boxShadow: 4 },
+                }}
               >
-                Login
+                Iniciar sesión
               </Button>
             </Grid>
             <Grid item xs={12} sm={6}>
               <Button
                 disabled={isAuthenticating}
                 onClick={onGoogleSingIn}
-                variant="contained"
+                variant="outlined"
                 fullWidth
+                sx={{
+                  py: 1.5,
+                  fontWeight: 600,
+                  borderWidth: 2,
+                  "&:hover": { borderWidth: 2 },
+                }}
               >
                 <Google />
                 <Typography sx={{ ml: 1 }}>Google</Typography>
               </Button>
             </Grid>
           </Grid>
-          <Grid container direction="row" justifyContent="end">
-            <Link component={RouterLink} color="inherit" to="/auth/register">
+          <Grid container direction="row" justifyContent="end" sx={{ mt: 2 }}>
+            <Typography sx={{ mr: 1 }}>¿No tienes cuenta?</Typography>
+            <Link
+              component={RouterLink}
+              color="primary"
+              to="/auth/register"
+              sx={{ fontWeight: 600 }}
+            >
               Crear una cuenta
             </Link>
           </Grid>

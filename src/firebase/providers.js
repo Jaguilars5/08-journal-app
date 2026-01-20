@@ -5,6 +5,7 @@ import {
   signInWithPopup,
   updateProfile,
 } from "firebase/auth";
+import { getFirebaseErrorMessage } from "../helpers/firebaseErrors";
 import { FirebaseAuth } from "./confing";
 
 const googleProvider = new GoogleAuthProvider();
@@ -22,7 +23,7 @@ export const singInWithGoogle = async () => {
       uid,
     };
   } catch (error) {
-    const errorMessage = error.message;
+    const errorMessage = getFirebaseErrorMessage(error.code || error.message);
     return {
       ok: false,
       errorMessage,
@@ -39,7 +40,7 @@ export const registerUserWithEmailPassword = async ({
     const resp = await createUserWithEmailAndPassword(
       FirebaseAuth,
       email,
-      password
+      password,
     );
     const { uid, photoURL } = resp.user; //!photoURL nunca regresa ya que no se registra con eso
     await updateProfile(FirebaseAuth.currentUser, { displayName });
@@ -52,7 +53,7 @@ export const registerUserWithEmailPassword = async ({
       uid,
     };
   } catch (error) {
-    const errorMessage = error.message;
+    const errorMessage = getFirebaseErrorMessage(error.code || error.message);
     return {
       ok: false,
       errorMessage,
@@ -65,7 +66,7 @@ export const loginWithEmailPassword = async ({ email, password }) => {
     const resp = await signInWithEmailAndPassword(
       FirebaseAuth,
       email,
-      password
+      password,
     );
     const { uid, photoURL, displayName } = resp.user; //!photoURL nunca regresa ya que no se registra con eso
 
@@ -78,7 +79,7 @@ export const loginWithEmailPassword = async ({ email, password }) => {
       uid,
     };
   } catch (error) {
-    const errorMessage = error.message;
+    const errorMessage = getFirebaseErrorMessage(error.code || error.message);
     return {
       ok: false,
       errorMessage,
